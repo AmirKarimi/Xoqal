@@ -34,7 +34,7 @@ namespace Xoqal.Security
         /// <value>
         /// The data provider.
         /// </value>
-        IAuthenticationDataProvider DataProvider { get; set; }
+        IAuthenticationDataProvider DataProvider { get; }
 
         /// <summary>
         /// Validates the user.

@@ -31,13 +31,35 @@ namespace Xoqal.Security
     public class Authentication : IAuthentication
     {
         #region Fields
-
+        
         private static IAuthentication defaultInstance;
         private static IPrincipal globalPrincipal;
 
         #endregion
 
         #region Properties
+        
+        /// <summary>
+        /// Responsible for initializing  IAuthenticationDataProvider.
+        /// It should be populated in application bootstrap
+        /// </summary>
+        /// <remarks>
+        /// a proper DI container should take the lifetime responsibility of an object that put to this class through 
+        /// this delegate.
+        /// </remarks>
+        /// <example>
+        /// var container = new WindsorContainer();
+        /// 
+        /// container.Register(Component.For<IAuthenticationDataProvider>()
+        ///                             .ImplementedBy<AuthenticationDataProvider>()
+        ///                             .LifeStyle.HybridPerWebRequestPerThread());
+        /// 
+        /// Xoqal.Security.Authentication.DataProviderInitializer = () =>
+        ///     {
+        ///         return container.Resolve<IAuthenticationDataProvider>();
+        ///     };
+        /// </example>
+        public static Func<IAuthenticationDataProvider> DataProviderInitializer { get; set; }
 
         /// <summary>
         /// Gets the default instance.
@@ -54,12 +76,15 @@ namespace Xoqal.Security
         }
 
         /// <summary>
-        /// Gets or sets the authentication data provider.
+        /// Get the DataProvider instance (for current thread)
         /// </summary>
-        /// <value>
-        /// The authentication data provider.
-        /// </value>
-        public IAuthenticationDataProvider DataProvider { get; set; }
+        /// <remarks>
+        /// Set by DataProviderInitializer factory
+        /// </remarks>
+        public IAuthenticationDataProvider DataProvider
+        {
+            get { return DataProviderInitializer.Invoke(); }
+        }
 
         #endregion
 

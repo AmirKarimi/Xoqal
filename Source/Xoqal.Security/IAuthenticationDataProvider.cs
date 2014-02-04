@@ -25,8 +25,9 @@ namespace Xoqal.Security
 
     /// <summary>
     /// Represents the data provider of the <see cref="Authentication"/> class.
+    /// Usually data provider should implement IDisposable in order to release expensive resource at the end.
     /// </summary>
-    public interface IAuthenticationDataProvider
+    public interface IAuthenticationDataProvider : IDisposable
     {
         /// <summary>
         /// Gets the user.

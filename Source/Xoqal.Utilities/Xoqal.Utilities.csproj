@@ -61,6 +61,7 @@
     <Compile Include="FingerPrint.cs" />
     <Compile Include="HtmlTextHelper.cs" />
     <Compile Include="ImagingHelper.cs" />
+    <Compile Include="Linq\LambdaExpressions.cs" />
     <Compile Include="Linq\QueryExtensions.cs" />
     <Compile Include="MachineIdComponents.cs" />
     <Compile Include="PersianTextHelper.cs" />
